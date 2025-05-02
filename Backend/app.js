@@ -1,8 +1,8 @@
 import express from "express";
-import authRouter from "./routes/auth.routes.js";
+import authRouter from "./src/routes/auth.routes.js";
 const app=express();
 
-
+import {PORT} from "./src/config/env.js";
 app.get("/",(req,res)=>{
     res.send("Hello World");
 
@@ -11,6 +11,6 @@ app.get("/",(req,res)=>{
 
 app.use('/auth',authRouter);
 
-app.listen(8080,()=>{
+app.listen(PORT,()=>{
     console.log("Server is running on port 8080");
 })
