@@ -12,13 +12,9 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-       //console.log(profile); // You’ll see user info here
-        
-        // Check if user already exists
         let user = await User.findOne({ googleId: profile.id });
 
         if (!user) {
-          // If user doesn't exist, create a new one
           user = new User({
             name: profile.displayName,
             googleId: profile.id,
@@ -28,13 +24,11 @@ passport.use(
           
         }
         
-        //console.log("USER INFO : ",user);
         
-        // If user is found or created, pass the user info to done()
         return done(null, user);
       } catch (err) {
-        console.error(err); // Handle any errors
-        return done(err, false); // Pass error to done() if there's an issue
+        console.error(err); 
+        return done(err, false); 
       }
     }
   )

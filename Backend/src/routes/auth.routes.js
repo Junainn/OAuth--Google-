@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/login',(req,res)=>{
-    res.status(200).send("Login Page");
+    res.status(200).send("This is manual login page. Go to /auth/google to login with Google.");
 })
 
 router.get('/google',passport.authenticate('google',{
@@ -17,7 +17,9 @@ router.get("/google/redirect",passport.authenticate('google'),(req,res)=>{
 })
 
 router.get('/logout',(req,res)=>{
-    res.status(200).send("Logout Page");
+    req.logout(()=>{
+        res.redirect('/auth/login')
+    })
 })
 
 

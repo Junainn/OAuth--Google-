@@ -31,7 +31,7 @@ app.use(passport.session());
 
 
 app.get("/",(req,res)=>{
-    res.send("Hello World");
+    res.send("Welcome to the home page. Go to /auth/google to login with Google.");
 
 })
 
