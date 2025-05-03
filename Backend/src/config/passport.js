@@ -24,9 +24,12 @@ passport.use(
             googleId: profile.id,
           });
 
-          await user.save(); // Save the new user to the database
+          await user.save();
+          done(null,user.id);
         }
-        
+        else{
+          done(null,user.id);
+        }
         console.log("USER INFO : ",user);
         
         // If user is found or created, pass the user info to done()
@@ -38,3 +41,14 @@ passport.use(
     }
   )
 );
+
+
+passport.serializeUser((user,done)=>{
+  done(null,user.id); 
+});
+
+passport.deserializeUser(async(id,done)=>{
+  const user = await User.findById(id); 
+  if(!user) return done(null,false); 
+  done(null,user);
+})
