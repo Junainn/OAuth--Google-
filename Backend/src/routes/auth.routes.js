@@ -13,8 +13,7 @@ router.get('/google',passport.authenticate('google',{
 }))
 
 router.get("/google/redirect",passport.authenticate('google'),(req,res)=>{
-    // Successful authentication, redirect home.
-    res.status(200).send("You reached the callback URI");
+    res.redirect("/profile"); 
 })
 
 router.get('/logout',(req,res)=>{

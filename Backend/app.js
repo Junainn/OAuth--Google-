@@ -1,9 +1,13 @@
 import express from "express";
-import cookieSession from "cookie-session";
+import session from "express-session";
 import passport from "passport";
 
 
 import authRouter from "./src/routes/auth.routes.js";
+import profileRouter from "./src/routes/profile.routes.js";
+
+
+import "./src/config/passport.js"; 
 import connectDB from "./src/config/db.js";
 import {PORT,COOKIE_KEY} from "./src/config/env.js";
 
@@ -11,10 +15,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-app.use(cookieSession({
-    maxAge: 24*60*60*1000, 
-    keys: [COOKIE_KEY],
-}));
+app.use(
+    session({
+      secret: COOKIE_KEY,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 24 * 60 * 60 * 1000,
+      },
+    })
+  );
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -27,6 +37,7 @@ app.get("/",(req,res)=>{
 
 
 app.use('/auth',authRouter);
+app.use('/profile',profileRouter);
 
 app.listen(PORT,async()=>{
     await connectDB();
