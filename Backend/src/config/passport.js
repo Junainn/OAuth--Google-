@@ -19,12 +19,8 @@ passport.use(
             name: profile.displayName,
             googleId: profile.id,
           });
-
           await user.save();
-          
-        }
-        
-        
+        } 
         return done(null, user);
       } catch (err) {
         console.error(err); 
